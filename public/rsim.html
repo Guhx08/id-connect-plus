@@ -7582,6 +7582,17 @@ function rsimDoLogin() {
   }
 }
 
+function rsimGoogleLogin() {
+  // Abre popup de login com Google via Google Identity Services
+  const clientId = ''; // TODO: Configurar Google Client ID
+  if (!clientId) {
+    // Modo demo: login direto sem Google OAuth real
+    document.getElementById('rsim-login-overlay').classList.add('hidden');
+    sessionStorage.setItem('rsim_auth', '1');
+    return;
+  }
+}
+
 // Verificar sessão ao carregar
 (function() {
   if (sessionStorage.getItem('rsim_auth') === '1') {

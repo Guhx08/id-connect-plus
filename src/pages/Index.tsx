@@ -67,6 +67,40 @@ const Index = () => {
     }
   };
 
+  const handleSignup = async () => {
+    setError("");
+    setSuccess("");
+    if (!signupEmail || !signupPass) {
+      setError("Preencha e-mail e senha.");
+      return;
+    }
+    if (signupPass !== signupConfirm) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+    if (signupPass.length < 6) {
+      setError("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+    try {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: signupEmail,
+        password: signupPass,
+        options: { emailRedirectTo: window.location.origin },
+      });
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+      setSuccess("Cadastro realizado! Verifique seu e-mail para confirmar.");
+      setSignupEmail("");
+      setSignupPass("");
+      setSignupConfirm("");
+    } catch {
+      setError("Erro ao cadastrar. Tente novamente.");
+    }
+  };
+
   const handleLogout = async () => {
     sessionStorage.removeItem("rsim_auth");
     sessionStorage.removeItem("rsim_user");

@@ -6,10 +6,14 @@ import type { Session } from "@supabase/supabase-js";
 const Index = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [loginMode, setLoginMode] = useState<"main" | "credentials">("main");
+  const [loginMode, setLoginMode] = useState<"main" | "credentials" | "signup">("main");
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPass, setSignupPass] = useState("");
+  const [signupConfirm, setSignupConfirm] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {

@@ -277,14 +277,107 @@ const Index = () => {
               ← Voltar
             </button>
           </>
+        ) : (
+          <>
+            {/* Signup form */}
+            <input
+              type="email"
+              placeholder="E-mail"
+              value={signupEmail}
+              onChange={(e) => setSignupEmail(e.target.value)}
+              style={{
+                width: "100%", padding: "14px 16px", border: "1.5px solid #e2e8f0",
+                borderRadius: "10px", fontSize: "0.95rem", marginBottom: "12px",
+                outline: "none", boxSizing: "border-box",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.currentTarget.style.borderColor = "#e2e8f0"}
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              value={signupPass}
+              onChange={(e) => setSignupPass(e.target.value)}
+              style={{
+                width: "100%", padding: "14px 16px", border: "1.5px solid #e2e8f0",
+                borderRadius: "10px", fontSize: "0.95rem", marginBottom: "12px",
+                outline: "none", boxSizing: "border-box",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.currentTarget.style.borderColor = "#e2e8f0"}
+            />
+            <input
+              type="password"
+              placeholder="Confirmar Senha"
+              value={signupConfirm}
+              onChange={(e) => setSignupConfirm(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSignup()}
+              style={{
+                width: "100%", padding: "14px 16px", border: "1.5px solid #e2e8f0",
+                borderRadius: "10px", fontSize: "0.95rem", marginBottom: "12px",
+                outline: "none", boxSizing: "border-box",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.currentTarget.style.borderColor = "#e2e8f0"}
+            />
+
+            {error && (
+              <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "0 0 12px" }}>{error}</p>
+            )}
+            {success && (
+              <p style={{ color: "#16a34a", fontSize: "0.85rem", margin: "0 0 12px" }}>{success}</p>
+            )}
+
+            <button
+              onClick={handleSignup}
+              style={{
+                width: "100%", padding: "14px", border: "none",
+                borderRadius: "10px", background: "#16a34a", color: "white",
+                fontSize: "0.95rem", fontWeight: 600, cursor: "pointer",
+                transition: "all 0.2s", marginBottom: "12px",
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = "#15803d"}
+              onMouseOut={(e) => e.currentTarget.style.background = "#16a34a"}
+            >
+              Criar Conta
+            </button>
+
+            <button
+              onClick={() => { setLoginMode("main"); setError(""); setSuccess(""); }}
+              style={{
+                background: "none", border: "none", color: "#2563eb",
+                fontSize: "0.85rem", cursor: "pointer", fontWeight: 500,
+              }}
+            >
+              ← Voltar ao login
+            </button>
+          </>
         )}
 
         {error && loginMode === "main" && (
           <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "12px 0 0" }}>{error}</p>
         )}
 
+        {loginMode === "main" && (
+          <div style={{ marginTop: "20px" }}>
+            <span style={{ fontSize: "0.85rem", color: "#64748b" }}>Não tem conta? </span>
+            <button
+              onClick={() => { setLoginMode("signup"); setError(""); setSuccess(""); }}
+              style={{
+                background: "none", border: "none", color: "#2563eb",
+                fontSize: "0.85rem", cursor: "pointer", fontWeight: 600,
+              }}
+            >
+              Cadastre-se
+            </button>
+          </div>
+        )}
+
         <div style={{
-          fontSize: "0.75rem", color: "#94a3b8", marginTop: "24px"
+          fontSize: "0.75rem", color: "#94a3b8", marginTop: "16px"
         }}>
           Problemas de acesso? Fale com seu gestor RSIM.
         </div>

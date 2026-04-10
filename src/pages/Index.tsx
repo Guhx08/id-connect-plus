@@ -87,7 +87,6 @@ const Index = () => {
     );
   }
 
-  const [activeTab, setActiveTab] = useState<"portal" | "solicitar" | "acompanhar" | "admin">("portal");
 
   if (session || sessionStorage.getItem("rsim_auth") === "1") {
     return (

@@ -17,6 +17,7 @@ const Index = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"portal" | "solicitar" | "acompanhar" | "admin">("portal");
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
@@ -86,35 +87,60 @@ const Index = () => {
     );
   }
 
+
   if (session || sessionStorage.getItem("rsim_auth") === "1") {
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #1e40af 100%)", fontFamily: "'DM Sans', sans-serif", padding: "20px" }}>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <div style={{ background: "white", borderRadius: "16px", padding: "40px", width: "100%", maxWidth: "480px", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", textAlign: "center" }}>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#1e293b", margin: "0 0 4px" }}>RSIM Consultoria</h2>
-          <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 28px" }}>Selecione a área desejada</p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <a href="/rsim.html" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
-              🏠 Portal do Corretor
-            </a>
-
-            <a href="/solicitar" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#16a34a", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
-              📝 Abrir Solicitação
-            </a>
-
-            <a href="/acompanhar" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#f59e0b", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
-              🔍 Acompanhar Solicitação
-            </a>
-
-            <a href="/admin" style={{ display: "block", width: "100%", padding: "16px", border: "1.5px solid #e2e8f0", borderRadius: "10px", background: "#fff", color: "#1e293b", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
-              ⚙️ Painel Administrativo
-            </a>
+      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* Top nav bar */}
+        <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#1e293b", padding: "0 16px", height: "48px", fontFamily: "'DM Sans', sans-serif", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "4px", overflowX: "auto" }}>
+            {[
+              { key: "portal" as const, label: "Portal do Corretor", icon: "🏠" },
+              { key: "solicitar" as const, label: "Abrir Solicitação", icon: "📝" },
+              { key: "acompanhar" as const, label: "Acompanhar", icon: "🔍" },
+              { key: "admin" as const, label: "Admin", icon: "⚙️" },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                style={{
+                  padding: "8px 14px",
+                  border: "none",
+                  borderRadius: "6px",
+                  background: activeTab === tab.key ? "#2563eb" : "transparent",
+                  color: activeTab === tab.key ? "#fff" : "#94a3b8",
+                  fontSize: "0.82rem",
+                  fontWeight: activeTab === tab.key ? 600 : 500,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.15s",
+                  fontFamily: "inherit",
+                }}
+              >
+                {tab.icon} {tab.label}
+              </button>
+            ))}
           </div>
-
-          <button onClick={async () => { await supabase.auth.signOut(); sessionStorage.removeItem("rsim_auth"); sessionStorage.removeItem("rsim_user"); setSession(null); }} style={{ marginTop: "20px", background: "none", border: "none", color: "#ef4444", fontSize: "0.85rem", cursor: "pointer", fontWeight: 600 }}>
-            Sair da conta
+          <button onClick={async () => { await supabase.auth.signOut(); sessionStorage.removeItem("rsim_auth"); sessionStorage.removeItem("rsim_user"); setSession(null); }} style={{ padding: "6px 12px", border: "1px solid #475569", borderRadius: "6px", background: "transparent", color: "#94a3b8", fontSize: "0.78rem", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
+            Sair
           </button>
+        </nav>
+
+        {/* Content */}
+        <div style={{ flex: 1, overflow: "hidden" }}>
+          {activeTab === "portal" && (
+            <iframe src="/rsim.html" title="RSIM Consultoria" style={{ width: "100%", height: "100%", border: "none" }} />
+          )}
+          {activeTab === "solicitar" && (
+            <iframe src="/solicitar" title="Solicitar" style={{ width: "100%", height: "100%", border: "none" }} />
+          )}
+          {activeTab === "acompanhar" && (
+            <iframe src="/acompanhar" title="Acompanhar" style={{ width: "100%", height: "100%", border: "none" }} />
+          )}
+          {activeTab === "admin" && (
+            <iframe src="/admin" title="Admin" style={{ width: "100%", height: "100%", border: "none" }} />
+          )}
         </div>
       </div>
     );

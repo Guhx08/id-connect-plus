@@ -88,7 +88,35 @@ const Index = () => {
 
   if (session || sessionStorage.getItem("rsim_auth") === "1") {
     return (
-      <iframe src="/rsim.html" title="RSIM Consultoria" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", border: "none", margin: 0, padding: 0 }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #1e40af 100%)", fontFamily: "'DM Sans', sans-serif", padding: "20px" }}>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <div style={{ background: "white", borderRadius: "16px", padding: "40px", width: "100%", maxWidth: "480px", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", textAlign: "center" }}>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#1e293b", margin: "0 0 4px" }}>RSIM Consultoria</h2>
+          <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 28px" }}>Selecione a área desejada</p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <a href="/rsim.html" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
+              🏠 Portal do Corretor
+            </a>
+
+            <a href="/solicitar" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#16a34a", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
+              📝 Abrir Solicitação
+            </a>
+
+            <a href="/acompanhar" style={{ display: "block", width: "100%", padding: "16px", border: "none", borderRadius: "10px", background: "#f59e0b", color: "white", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
+              🔍 Acompanhar Solicitação
+            </a>
+
+            <a href="/admin" style={{ display: "block", width: "100%", padding: "16px", border: "1.5px solid #e2e8f0", borderRadius: "10px", background: "#fff", color: "#1e293b", fontSize: "1rem", fontWeight: 600, cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>
+              ⚙️ Painel Administrativo
+            </a>
+          </div>
+
+          <button onClick={async () => { await supabase.auth.signOut(); sessionStorage.removeItem("rsim_auth"); sessionStorage.removeItem("rsim_user"); setSession(null); }} style={{ marginTop: "20px", background: "none", border: "none", color: "#ef4444", fontSize: "0.85rem", cursor: "pointer", fontWeight: 600 }}>
+            Sair da conta
+          </button>
+        </div>
+      </div>
     );
   }
 

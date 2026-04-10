@@ -131,9 +131,6 @@ const Index = () => {
           {activeTab === "portal" && (
             <iframe src="/rsim.html" title="RSIM Consultoria" style={{ width: "100%", height: "100%", border: "none" }} />
           )}
-          {activeTab === "solicitar" && (
-            <iframe src="/solicitar" title="Solicitar" style={{ width: "100%", height: "100%", border: "none" }} />
-          )}
           {activeTab === "acompanhar" && (
             <iframe src="/acompanhar" title="Acompanhar" style={{ width: "100%", height: "100%", border: "none" }} />
           )}

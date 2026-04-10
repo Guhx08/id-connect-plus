@@ -97,7 +97,6 @@ const Index = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "4px", overflowX: "auto" }}>
             {[
               { key: "portal" as const, label: "Portal do Corretor", icon: "🏠" },
-              { key: "solicitar" as const, label: "Abrir Solicitação", icon: "📝" },
               { key: "acompanhar" as const, label: "Acompanhar", icon: "🔍" },
               { key: "admin" as const, label: "Admin", icon: "⚙️" },
             ].map((tab) => (
@@ -131,9 +130,6 @@ const Index = () => {
         <div style={{ flex: 1, overflow: "hidden" }}>
           {activeTab === "portal" && (
             <iframe src="/rsim.html" title="RSIM Consultoria" style={{ width: "100%", height: "100%", border: "none" }} />
-          )}
-          {activeTab === "solicitar" && (
-            <iframe src="/solicitar" title="Solicitar" style={{ width: "100%", height: "100%", border: "none" }} />
           )}
           {activeTab === "acompanhar" && (
             <iframe src="/acompanhar" title="Acompanhar" style={{ width: "100%", height: "100%", border: "none" }} />

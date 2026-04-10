@@ -17,6 +17,7 @@ const Index = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"portal" | "solicitar" | "acompanhar" | "admin">("portal");
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {

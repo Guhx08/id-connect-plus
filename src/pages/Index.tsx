@@ -97,7 +97,6 @@ const Index = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "4px", overflowX: "auto" }}>
             {[
               { key: "portal" as const, label: "Portal do Corretor", icon: "🏠" },
-              { key: "solicitar" as const, label: "Abrir Solicitação", icon: "📝" },
               { key: "acompanhar" as const, label: "Acompanhar", icon: "🔍" },
               { key: "admin" as const, label: "Admin", icon: "⚙️" },
             ].map((tab) => (

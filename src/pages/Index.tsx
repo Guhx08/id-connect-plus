@@ -3,21 +3,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import type { Session } from "@supabase/supabase-js";
 
-type Mode = "main" | "credentials" | "signup";
+type Mode = "main" | "login" | "signup";
 
 const Index = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<Mode>("main");
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPass, setLoginPass] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPass, setSignupPass] = useState("");
   const [signupConfirm, setSignupConfirm] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"portal" | "solicitar" | "acompanhar" | "admin">("portal");
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"portal" | "acompanhar" | "admin">("portal");
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
@@ -31,15 +32,18 @@ const Index = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleCredentialsLogin = () => {
-    const users: Record<string, string> = { admin: "admin123", corretor1: "corretor123", gestor: "gestor123" };
-    if (users[user] && users[user] === pass) {
-      sessionStorage.setItem("rsim_auth", "1");
-      sessionStorage.setItem("rsim_user", user);
-      setSession({} as Session);
-    } else {
-      setError("Usuário ou senha incorretos.");
-    }
+  const handleEmailLogin = async () => {
+    setError("");
+    if (!loginEmail || !loginPass) { setError("Preencha e-mail e senha."); return; }
+    setLoginLoading(true);
+    try {
+      const { error: err } = await supabase.auth.signInWithPassword({
+        email: loginEmail.trim(),
+        password: loginPass,
+      });
+      if (err) { setError(err.message); }
+    } catch { setError("Erro ao fazer login."); }
+    setLoginLoading(false);
   };
 
   const handleGoogleLogin = async () => {
@@ -87,12 +91,10 @@ const Index = () => {
     );
   }
 
-
-  if (session || sessionStorage.getItem("rsim_auth") === "1") {
+  if (session) {
     return (
       <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        {/* Top nav bar */}
         <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#1e293b", padding: "0 16px", height: "48px", fontFamily: "'DM Sans', sans-serif", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "4px", overflowX: "auto" }}>
             {[
@@ -104,29 +106,22 @@ const Index = () => {
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 style={{
-                  padding: "8px 14px",
-                  border: "none",
-                  borderRadius: "6px",
+                  padding: "8px 14px", border: "none", borderRadius: "6px",
                   background: activeTab === tab.key ? "#2563eb" : "transparent",
                   color: activeTab === tab.key ? "#fff" : "#94a3b8",
-                  fontSize: "0.82rem",
-                  fontWeight: activeTab === tab.key ? 600 : 500,
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.15s",
-                  fontFamily: "inherit",
+                  fontSize: "0.82rem", fontWeight: activeTab === tab.key ? 600 : 500,
+                  cursor: "pointer", whiteSpace: "nowrap", transition: "all 0.15s", fontFamily: "inherit",
                 }}
               >
                 {tab.icon} {tab.label}
               </button>
             ))}
           </div>
-          <button onClick={async () => { await supabase.auth.signOut(); sessionStorage.removeItem("rsim_auth"); sessionStorage.removeItem("rsim_user"); setSession(null); }} style={{ padding: "6px 12px", border: "1px solid #475569", borderRadius: "6px", background: "transparent", color: "#94a3b8", fontSize: "0.78rem", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
+          <button onClick={async () => { await supabase.auth.signOut(); setSession(null); }} style={{ padding: "6px 12px", border: "1px solid #475569", borderRadius: "6px", background: "transparent", color: "#94a3b8", fontSize: "0.78rem", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
             Sair
           </button>
         </nav>
 
-        {/* Content */}
         <div style={{ flex: 1, overflow: "hidden" }}>
           {activeTab === "portal" && (
             <iframe src="/rsim.html" title="RSIM Consultoria" style={{ width: "100%", height: "100%", border: "none" }} />
@@ -169,8 +164,8 @@ const Index = () => {
               <div style={{ flex: 1, height: "1px", background: "#e2e8f0" }} />
             </div>
 
-            <button onClick={() => switchMode("credentials")} style={{ width: "100%", padding: "14px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "0.95rem", fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}>
-              Entrar com Usuário e Senha
+            <button onClick={() => switchMode("login")} style={{ width: "100%", padding: "14px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "0.95rem", fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}>
+              Entrar com E-mail e Senha
             </button>
 
             {error && <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "12px 0 0" }}>{error}</p>}
@@ -184,14 +179,14 @@ const Index = () => {
           </>
         )}
 
-        {/* ===== CREDENTIALS ===== */}
-        {mode === "credentials" && (
+        {/* ===== LOGIN ===== */}
+        {mode === "login" && (
           <>
-            <input type="text" placeholder="Usuário" value={user} onChange={(e) => setUser(e.target.value)} style={inputStyle} />
-            <input type="password" placeholder="Senha" value={pass} onChange={(e) => setPass(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleCredentialsLogin()} style={inputStyle} />
+            <input type="email" placeholder="E-mail" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} style={inputStyle} />
+            <input type="password" placeholder="Senha" value={loginPass} onChange={(e) => setLoginPass(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleEmailLogin()} style={inputStyle} />
             {error && <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "0 0 12px" }}>{error}</p>}
-            <button onClick={handleCredentialsLogin} style={{ width: "100%", padding: "14px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "0.95rem", fontWeight: 600, cursor: "pointer", marginBottom: "12px" }}>
-              Entrar
+            <button onClick={handleEmailLogin} disabled={loginLoading} style={{ width: "100%", padding: "14px", border: "none", borderRadius: "10px", background: "#2563eb", color: "white", fontSize: "0.95rem", fontWeight: 600, cursor: loginLoading ? "wait" : "pointer", marginBottom: "12px", opacity: loginLoading ? 0.7 : 1 }}>
+              {loginLoading ? "Entrando..." : "Entrar"}
             </button>
             <button onClick={() => switchMode("main")} style={{ background: "none", border: "none", color: "#2563eb", fontSize: "0.85rem", cursor: "pointer", fontWeight: 500 }}>
               ← Voltar

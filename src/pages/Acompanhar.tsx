@@ -45,10 +45,13 @@ const Acompanhar = () => {
     setLoading(true);
     setSearched(true);
 
-    const [{ data: sols }, { data: secs }] = await Promise.all([
-      supabase.from("solicitations").select("*").eq("email", email.trim().toLowerCase()).order("created_at", { ascending: false }),
+    const [lookupRes, { data: secs }] = await Promise.all([
+      supabase.functions.invoke("lookup-solicitations", {
+        body: { email: email.trim().toLowerCase() },
+      }),
       supabase.from("sectors").select("id, name"),
     ]);
+    const sols = lookupRes?.data?.data || [];
 
     setSolicitations(sols || []);
     setSectors(secs || []);

@@ -24,10 +24,12 @@ const Index = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setLoading(false);
+      try { if (s) sessionStorage.setItem("rsim_auth", "1"); else sessionStorage.removeItem("rsim_auth"); } catch {}
     });
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       setLoading(false);
+      try { if (s) sessionStorage.setItem("rsim_auth", "1"); } catch {}
     });
     return () => subscription.unsubscribe();
   }, []);

@@ -6478,6 +6478,14 @@
     if (typeof rsimActivateSector === 'function') rsimActivateSector('posvendas');
       sel.innerHTML = '<option value="">Selecione a operadora</option>' + 
         operadoras.map(o => `<option>${o}</option>`).join('');
+
+      // Checklist por operadora (somente se data-checklist-target presente)
+      const targetId = sel.getAttribute('data-checklist-target');
+      if (targetId) {
+        sel.addEventListener('change', function() {
+          renderChecklistOperadora(targetId, sel.value);
+        });
+      }
     });
 
     // LGPD banners
@@ -6485,6 +6493,72 @@
       el.innerHTML = '🔒 <strong>Proteção de Dados (LGPD):</strong> Seus dados são coletados exclusivamente para processar esta solicitação, em conformidade com a Lei nº 13.709/2018. <a href="#" onclick="document.getElementById(\'privacy-modal\').classList.add(\'open\');return false;" style="color:var(--teal);text-decoration:underline;">Ver Política de Privacidade</a>';
     });
   });
+
+  // ── CHECKLIST DE DOCUMENTOS POR OPERADORA ──
+  const CHECKLIST_OPERADORAS = {
+    'Bradesco Saúde': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência (últimos 90 dias)','Comprovante de vínculo (carteira profissional, contracheque ou declaração)','Cartão Nacional de Saúde (CNS)','Certidão de nascimento/casamento (para dependentes)','Declaração de Saúde preenchida e assinada'],
+      obs: 'Bradesco exige Declaração de Saúde original assinada e Comprovante de vínculo recente (até 60 dias). Para PME: contrato social + relação de funcionários.'
+    },
+    'Amil': {
+      docs: ['RG e CPF de titular e dependentes','Comprovante de residência atualizado','Cartão Nacional de Saúde (CNS) — obrigatório','Comprovante de vínculo profissional','Declaração de Saúde Amil assinada','Foto 3x4 recente (apenas para alguns produtos)'],
+      obs: 'Amil exige CNS de todos os beneficiários. Para Adesão: comprovante de elegibilidade da entidade de classe.'
+    },
+    'Hapvida': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência','Comprovante de vínculo (CTPS ou contracheque)','Declaração de Saúde Hapvida','Certidão de nascimento (dependentes menores)'],
+      obs: 'Hapvida não exige CNS. Validar área de cobertura antes do envio — produto é regional.'
+    },
+    'São Cristóvão Saúde': {
+      docs: ['RG e CPF de titular e dependentes','Comprovante de residência (últimos 60 dias)','Cartão Nacional de Saúde (CNS)','Declaração de Saúde assinada','Comprovante de vínculo (para PME/Adesão)'],
+      obs: 'São Cristóvão é exclusivo região São Paulo capital. Verifique o CEP do titular antes de enviar a proposta.'
+    },
+    'SulAmérica': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência','Cartão Nacional de Saúde (CNS)','Declaração de Saúde SulAmérica preenchida','Comprovante de vínculo profissional','Certidão de casamento/nascimento (dependentes)'],
+      obs: 'SulAmérica exige Declaração de Saúde preenchida em formulário oficial. Se houver doença preexistente, anexar laudos médicos.'
+    },
+    'Porto Seguro Saúde': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência (até 90 dias)','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Porto Seguro','Comprovante de vínculo (para coletivo)'],
+      obs: 'Porto Seguro: a Declaração de Saúde tem prazo de validade de 30 dias. Não enviar fotos por WhatsApp — somente PDF legível.'
+    },
+    'Unimed': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência atualizado','Comprovante de vínculo profissional ou entidade','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Unimed','Certidão de nascimento/casamento (dependentes)'],
+      obs: 'Unimed varia por singular (regional). Confirme com o setor de Implantação qual Unimed atenderá o cliente antes de montar a proposta.'
+    },
+    'Prevent Senior': {
+      docs: ['RG e CPF (titular obrigatoriamente acima de 49 anos)','Comprovante de residência em São Paulo capital ou Grande SP','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Prevent Senior','Comprovante de renda (para alguns produtos)'],
+      obs: 'Prevent Senior: produto exclusivo para 49+ e região metropolitana de SP. Cliente deverá comparecer presencialmente para perícia médica antes da emissão.'
+    },
+    'MedSenior': {
+      docs: ['RG e CPF (titular obrigatoriamente acima de 49 anos)','Comprovante de residência','Cartão Nacional de Saúde (CNS)','Declaração de Saúde MedSenior assinada','Comprovante de vínculo (Adesão)'],
+      obs: 'MedSenior: idade mínima 49 anos. Validar abrangência regional antes do envio. Para Adesão: comprovante de filiação à entidade.'
+    }
+  };
+
+  function renderChecklistOperadora(targetId, operadora) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    if (!operadora || !CHECKLIST_OPERADORAS[operadora]) {
+      target.innerHTML = '';
+      return;
+    }
+    const data = CHECKLIST_OPERADORAS[operadora];
+    target.innerHTML = `
+      <div class="form-group operadora-checklist">
+        <div class="checklist-alert">
+          <strong>⚠️ Atenção corretor — ${operadora}:</strong> ${data.obs}
+        </div>
+        <label style="margin-top:12px;display:block;">📋 Checklist de documentos exigidos pela ${operadora}:</label>
+        <div class="checklist-list">
+          ${data.docs.map((d,i) => `
+            <label class="checklist-item">
+              <input type="checkbox" data-label="Doc ${operadora}: ${d}" />
+              <span>${d}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
 
 
   // ── PAGE NAVIGATION ──

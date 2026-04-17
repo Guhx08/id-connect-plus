@@ -1633,16 +1633,10 @@
         <div class="card-desc">Solicite a implantação de uma nova apólice de plano individual/familiar.</div>
         <div class="card-arrow">→</div>
       </div>
-      <div class="service-card" onclick="openModal('imp-docs-pf')">
-        <div class="card-icon">📄</div>
-        <div class="card-title">Envio de Documentação</div>
-        <div class="card-desc">Envie documentos necessários para emissão ou análise da proposta.</div>
-        <div class="card-arrow">→</div>
-      </div>
-      <div class="service-card" onclick="openModal('imp-acomp-pf')">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">Acompanhamento de Proposta</div>
-        <div class="card-desc">Acompanhe o status da sua proposta em análise.</div>
+      <div class="service-card" onclick="openModal('imp-adesao-pf')">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Apólice PF / Adesão</div>
+        <div class="card-desc">Solicite a implantação de apólice por adesão (entidades de classe / coletivo por adesão).</div>
         <div class="card-arrow">→</div>
       </div>
       </div>
@@ -1660,18 +1654,6 @@
         <div class="card-icon">📋</div>
         <div class="card-title">Nova Apólice Empresarial</div>
         <div class="card-desc">Solicite a implantação de uma nova apólice coletiva empresarial.</div>
-        <div class="card-arrow">→</div>
-      </div>
-      <div class="service-card" onclick="openModal('imp-docs-pj')">
-        <div class="card-icon">📄</div>
-        <div class="card-title">Envio de Documentação</div>
-        <div class="card-desc">Envie documentos para emissão ou análise da proposta empresarial.</div>
-        <div class="card-arrow">→</div>
-      </div>
-      <div class="service-card" onclick="openModal('imp-acomp-pj')">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">Acompanhamento de Proposta</div>
-        <div class="card-desc">Acompanhe o status da proposta empresarial em análise.</div>
         <div class="card-arrow">→</div>
       </div>
       </div>
@@ -5816,29 +5798,10 @@
       </div>
       <div class="form-group">
         <label>Operadora do plano <span class="required">*</span></label>
-        <select class="operadora-select"></select>
+        <select class="operadora-select" data-checklist-target="checklist-imp-apolice-pf"></select>
       </div>
-      <div class="form-group">
-        <label>Acesso ao Portal do Cliente <span class="required">*</span></label>
-        <div class="radio-group" style="margin-bottom:12px;">
-          <label class="radio-option" onclick="togglePortal('imp-apolice-pf_portal', true)">
-            <input type="radio" name="portal-imp-apolice-pf_portal" value="sim" /> Sim, tenho acesso
-          </label>
-          <label class="radio-option" onclick="togglePortal('imp-apolice-pf_portal', false)">
-            <input type="radio" name="portal-imp-apolice-pf_portal" value="nao" /> Não tenho acesso
-          </label>
-        </div>
-        <div id="portal-fields-imp-apolice-pf_portal" style="display:none;">
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom:0">
-              <input type="text" placeholder="Usuário / Login" data-label="Login do Portal" />
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <input type="password" placeholder="Senha" data-label="Senha do Portal" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Acesso ao Portal removido conforme regra de implantação -->
+      <div id="checklist-imp-apolice-pf"></div>
       <div class="form-group">
         <label>Nome completo do proponente <span class="required">*</span></label>
         <input type="text" placeholder="Nome completo" />
@@ -5918,6 +5881,114 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL: imp-adesao-pf (Apólice PF / Adesão) -->
+<div id="modal-imp-adesao-pf" class="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('imp-adesao-pf')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">📝</div>
+      <div><div class="modal-title">Apólice PF / Adesão</div><div class="modal-subtitle">Implantação — Coletivo por Adesão</div></div>
+    </div>
+    <div id="form-imp-adesao-pf">
+      <div class="lgpd-banner lgpd-auto"></div>
+
+      <div class="form-group">
+        <label>Nome do Corretor <span class="required">*</span></label>
+        <input type="text" placeholder="Digite o nome do corretor" data-label="Corretor Responsável" required />
+      </div>
+      <div class="form-group">
+        <label>Operadora do plano <span class="required">*</span></label>
+        <select class="operadora-select" data-checklist-target="checklist-imp-adesao-pf"></select>
+      </div>
+
+      <!-- Checklist dinâmico por operadora -->
+      <div id="checklist-imp-adesao-pf"></div>
+
+      <div class="form-group">
+        <label>Entidade de classe / Associação <span class="required">*</span></label>
+        <input type="text" placeholder="Ex: OAB, CRM, Qualicorp, Aliança..." />
+      </div>
+      <div class="form-group">
+        <label>Nome completo do proponente <span class="required">*</span></label>
+        <input type="text" placeholder="Nome completo" />
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>CPF <span class="required">*</span></label><input type="text" placeholder="000.000.000-00" /></div>
+        <div class="form-group"><label>Data de nascimento <span class="required">*</span></label><input type="date" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefone <span class="required">*</span></label><input type="text" placeholder="(11) 90000-0000" /></div>
+        <div class="form-group"><label>E-mail <span class="required">*</span></label><input type="email" placeholder="seu@email.com" /></div>
+      </div>
+      <div class="form-group">
+        <label>Plano de interesse <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Adesão Individual</option>
+          <option>Adesão Familiar</option>
+          <option>Com coparticipação</option>
+          <option>Sem coparticipação</option>
+          <option>Com odontológico</option>
+          <option>Sem odontológico</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cobertura desejada <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Nacional</option>
+          <option>Estadual</option>
+          <option>Municipal</option>
+          <option>Grupo de municípios</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Acomodação <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Apartamento</option>
+          <option>Enfermaria</option>
+          <option>Sem preferência</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Número de beneficiários (titular + dependentes) <span class="required">*</span></label>
+        <input type="text" placeholder="Ex: 3" />
+      </div>
+      <div class="form-group">
+        <label>Documentos do proponente e dependentes <span class="required">*</span></label>
+        <div class="file-upload-area">
+          <input type="file" id="file-doc-imp-adesao-pf" accept=".pdf,.jpg,.jpeg,.png" multiple onchange="handleFiles('doc-imp-adesao-pf')" />
+          <div class="file-upload-icon">📎</div>
+          <div class="file-upload-text">Clique ou arraste o arquivo aqui<br><strong>PDF, JPG ou PNG</strong> — máx. 10MB</div>
+        </div>
+        <div class="file-list" id="file-list-doc-imp-adesao-pf"></div>
+        <div class="wa-attach-warn" id="wa-warn-doc-imp-adesao-pf">
+          ⚠️ <strong>WhatsApp:</strong> Envie também os documentos diretamente na conversa do WhatsApp.
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea placeholder="Informações adicionais (opcional)"></textarea>
+      </div>
+      <div class="consent-block">
+        <input type="checkbox" id="consent-imp-adesao-pf" onchange="toggleConsent('imp-adesao-pf')">
+        <label for="consent-imp-adesao-pf">
+          Li e concordo com a <a href="#" onclick="document.getElementById('privacy-modal').classList.add('open');return false;">Política de Privacidade</a> da RSIM Consultoria e autorizo o uso dos meus dados pessoais conforme a <strong>LGPD (Lei nº 13.709/2018)</strong>.
+        </label>
+      </div>
+      <button class="btn-submit" onclick="submitForm('imp-adesao-pf')">✉️ Enviar Solicitação</button>
+    </div>
+    <div id="success-imp-adesao-pf" class="success-msg">
+      <div class="success-icon">✓</div>
+      <h3>Solicitação enviada! ✅</h3>
+      <p>Sua solicitação de <strong>Apólice PF / Adesão</strong> foi registrada. Guarde o protocolo abaixo.</p>
+      <div class="protocol"><span>Protocolo</span><strong id="prot-imp-adesao-pf"></strong></div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: imp-apolice-pj -->
 <div id="modal-imp-apolice-pj" class="modal-overlay">
   <div class="modal">
@@ -5935,29 +6006,10 @@
       </div>
       <div class="form-group">
         <label>Operadora do plano <span class="required">*</span></label>
-        <select class="operadora-select"></select>
+        <select class="operadora-select" data-checklist-target="checklist-imp-apolice-pj"></select>
       </div>
-      <div class="form-group">
-        <label>Acesso ao Portal Empresa <span class="required">*</span></label>
-        <div class="radio-group" style="margin-bottom:12px;">
-          <label class="radio-option" onclick="togglePortal('imp-apolice-pj_portal', true)">
-            <input type="radio" name="portal-imp-apolice-pj_portal" value="sim" /> Sim, tenho acesso
-          </label>
-          <label class="radio-option" onclick="togglePortal('imp-apolice-pj_portal', false)">
-            <input type="radio" name="portal-imp-apolice-pj_portal" value="nao" /> Não tenho acesso
-          </label>
-        </div>
-        <div id="portal-fields-imp-apolice-pj_portal" style="display:none;">
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom:0">
-              <input type="text" placeholder="Usuário / Login" data-label="Login do Portal" />
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <input type="password" placeholder="Senha" data-label="Senha do Portal" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Acesso ao Portal removido conforme regra de implantação -->
+      <div id="checklist-imp-apolice-pj"></div>
       <div class="form-group">
         <label>Razão social da empresa <span class="required">*</span></label>
         <input type="text" placeholder="Razão social completa" />
@@ -6426,6 +6478,14 @@
     if (typeof rsimActivateSector === 'function') rsimActivateSector('posvendas');
       sel.innerHTML = '<option value="">Selecione a operadora</option>' + 
         operadoras.map(o => `<option>${o}</option>`).join('');
+
+      // Checklist por operadora (somente se data-checklist-target presente)
+      const targetId = sel.getAttribute('data-checklist-target');
+      if (targetId) {
+        sel.addEventListener('change', function() {
+          renderChecklistOperadora(targetId, sel.value);
+        });
+      }
     });
 
     // LGPD banners
@@ -6433,6 +6493,72 @@
       el.innerHTML = '🔒 <strong>Proteção de Dados (LGPD):</strong> Seus dados são coletados exclusivamente para processar esta solicitação, em conformidade com a Lei nº 13.709/2018. <a href="#" onclick="document.getElementById(\'privacy-modal\').classList.add(\'open\');return false;" style="color:var(--teal);text-decoration:underline;">Ver Política de Privacidade</a>';
     });
   });
+
+  // ── CHECKLIST DE DOCUMENTOS POR OPERADORA ──
+  const CHECKLIST_OPERADORAS = {
+    'Bradesco Saúde': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência (últimos 90 dias)','Comprovante de vínculo (carteira profissional, contracheque ou declaração)','Cartão Nacional de Saúde (CNS)','Certidão de nascimento/casamento (para dependentes)','Declaração de Saúde preenchida e assinada'],
+      obs: 'Bradesco exige Declaração de Saúde original assinada e Comprovante de vínculo recente (até 60 dias). Para PME: contrato social + relação de funcionários.'
+    },
+    'Amil': {
+      docs: ['RG e CPF de titular e dependentes','Comprovante de residência atualizado','Cartão Nacional de Saúde (CNS) — obrigatório','Comprovante de vínculo profissional','Declaração de Saúde Amil assinada','Foto 3x4 recente (apenas para alguns produtos)'],
+      obs: 'Amil exige CNS de todos os beneficiários. Para Adesão: comprovante de elegibilidade da entidade de classe.'
+    },
+    'Hapvida': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência','Comprovante de vínculo (CTPS ou contracheque)','Declaração de Saúde Hapvida','Certidão de nascimento (dependentes menores)'],
+      obs: 'Hapvida não exige CNS. Validar área de cobertura antes do envio — produto é regional.'
+    },
+    'São Cristóvão Saúde': {
+      docs: ['RG e CPF de titular e dependentes','Comprovante de residência (últimos 60 dias)','Cartão Nacional de Saúde (CNS)','Declaração de Saúde assinada','Comprovante de vínculo (para PME/Adesão)'],
+      obs: 'São Cristóvão é exclusivo região São Paulo capital. Verifique o CEP do titular antes de enviar a proposta.'
+    },
+    'SulAmérica': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência','Cartão Nacional de Saúde (CNS)','Declaração de Saúde SulAmérica preenchida','Comprovante de vínculo profissional','Certidão de casamento/nascimento (dependentes)'],
+      obs: 'SulAmérica exige Declaração de Saúde preenchida em formulário oficial. Se houver doença preexistente, anexar laudos médicos.'
+    },
+    'Porto Seguro Saúde': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência (até 90 dias)','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Porto Seguro','Comprovante de vínculo (para coletivo)'],
+      obs: 'Porto Seguro: a Declaração de Saúde tem prazo de validade de 30 dias. Não enviar fotos por WhatsApp — somente PDF legível.'
+    },
+    'Unimed': {
+      docs: ['RG e CPF do titular e dependentes','Comprovante de residência atualizado','Comprovante de vínculo profissional ou entidade','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Unimed','Certidão de nascimento/casamento (dependentes)'],
+      obs: 'Unimed varia por singular (regional). Confirme com o setor de Implantação qual Unimed atenderá o cliente antes de montar a proposta.'
+    },
+    'Prevent Senior': {
+      docs: ['RG e CPF (titular obrigatoriamente acima de 49 anos)','Comprovante de residência em São Paulo capital ou Grande SP','Cartão Nacional de Saúde (CNS)','Declaração de Saúde Prevent Senior','Comprovante de renda (para alguns produtos)'],
+      obs: 'Prevent Senior: produto exclusivo para 49+ e região metropolitana de SP. Cliente deverá comparecer presencialmente para perícia médica antes da emissão.'
+    },
+    'MedSenior': {
+      docs: ['RG e CPF (titular obrigatoriamente acima de 49 anos)','Comprovante de residência','Cartão Nacional de Saúde (CNS)','Declaração de Saúde MedSenior assinada','Comprovante de vínculo (Adesão)'],
+      obs: 'MedSenior: idade mínima 49 anos. Validar abrangência regional antes do envio. Para Adesão: comprovante de filiação à entidade.'
+    }
+  };
+
+  function renderChecklistOperadora(targetId, operadora) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    if (!operadora || !CHECKLIST_OPERADORAS[operadora]) {
+      target.innerHTML = '';
+      return;
+    }
+    const data = CHECKLIST_OPERADORAS[operadora];
+    target.innerHTML = `
+      <div class="form-group operadora-checklist">
+        <div class="checklist-alert">
+          <strong>⚠️ Atenção corretor — ${operadora}:</strong> ${data.obs}
+        </div>
+        <label style="margin-top:12px;display:block;">📋 Checklist de documentos exigidos pela ${operadora}:</label>
+        <div class="checklist-list">
+          ${data.docs.map((d,i) => `
+            <label class="checklist-item">
+              <input type="checkbox" data-label="Doc ${operadora}: ${d}" />
+              <span>${d}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
 
 
   // ── PAGE NAVIGATION ──
@@ -7072,6 +7198,44 @@
   margin-top: 20px;
 }
 /* ══ FIM LOGIN ═══════════════════════════════════════════════════════ */
+
+/* ══ CHECKLIST POR OPERADORA ══════════════════════════════════════════ */
+.operadora-checklist .checklist-alert {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-left: 4px solid #f97316;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #7c2d12;
+  line-height: 1.5;
+}
+.operadora-checklist .checklist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 6px;
+}
+.operadora-checklist .checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #1e293b;
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: 500;
+}
+.operadora-checklist .checklist-item input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: #2563eb;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+}
+/* ══ FIM CHECKLIST ════════════════════════════════════════════════════ */
 </style>
 
 <!-- BOTÕES FLUTUANTES -->
@@ -7391,45 +7555,29 @@ function rsimActivateSector(pageId) {
   }
 }
 
-/* ══ LOGIN ═══════════════════════════════════════════════════════════ */
-const RSIM_USERS = {
-  'corretor': 'rsim2024',
-  'rsim': 'rsim@2026',
-  'admin': 'admin123'
-};
+/* ══ LOGIN ═══════════════════════════════════════════════════════════
+   Autenticação delegada ao wrapper React (Supabase Auth).
+   Quando o portal está embarcado em iframe, o overlay de login interno
+   é dispensado para evitar dupla autenticação.
+   ═════════════════════════════════════════════════════════════════════ */
+function rsimDoLogin() { hideLegacyLoginOverlay(); }
+function rsimGoogleLogin() { hideLegacyLoginOverlay(); }
 
-function rsimDoLogin() {
-  const user = document.getElementById('rsim-login-user').value.trim().toLowerCase();
-  const pass = document.getElementById('rsim-login-pass').value;
-  const errEl = document.getElementById('rsim-login-error');
-  if (!user || !pass) { errEl.textContent = 'Preencha usuário e senha.'; return; }
-  if (RSIM_USERS[user] && RSIM_USERS[user] === pass) {
-    document.getElementById('rsim-login-overlay').classList.add('hidden');
-    sessionStorage.setItem('rsim_auth', '1');
-    errEl.textContent = '';
-  } else {
-    errEl.textContent = '❌ Usuário ou senha incorretos.';
-    document.getElementById('rsim-login-pass').value = '';
-    document.getElementById('rsim-login-pass').focus();
-  }
+function hideLegacyLoginOverlay() {
+  const ov = document.getElementById('rsim-login-overlay');
+  if (ov) { ov.classList.add('hidden'); ov.style.display = 'none'; }
+  try { sessionStorage.setItem('rsim_auth', '1'); } catch(e){}
 }
 
-function rsimGoogleLogin() {
-  // Abre popup de login com Google via Google Identity Services
-  const clientId = ''; // TODO: Configurar Google Client ID
-  if (!clientId) {
-    // Modo demo: login direto sem Google OAuth real
-    document.getElementById('rsim-login-overlay').classList.add('hidden');
-    sessionStorage.setItem('rsim_auth', '1');
-    return;
-  }
-}
-
-// Verificar sessão ao carregar
-(function() {
-  if (sessionStorage.getItem('rsim_auth') === '1') {
-    const ov = document.getElementById('rsim-login-overlay');
-    if (ov) ov.classList.add('hidden');
+(function autoAuth() {
+  // Se está dentro de iframe (wrapper React) ou já autenticado via React,
+  // pular totalmente o overlay de login legado.
+  const inIframe = window.self !== window.top;
+  const alreadyAuth = (function(){ try { return sessionStorage.getItem('rsim_auth') === '1'; } catch(e){ return false; } })();
+  if (inIframe || alreadyAuth) {
+    document.addEventListener('DOMContentLoaded', hideLegacyLoginOverlay);
+    // tentativa imediata caso o DOM já esteja parcialmente pronto
+    if (document.getElementById('rsim-login-overlay')) hideLegacyLoginOverlay();
   }
 })();
 /* ══ FIM LOGIN ════════════════════════════════════════════════════════ */

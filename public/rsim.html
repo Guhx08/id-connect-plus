@@ -5881,6 +5881,114 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL: imp-adesao-pf (Apólice PF / Adesão) -->
+<div id="modal-imp-adesao-pf" class="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('imp-adesao-pf')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">📝</div>
+      <div><div class="modal-title">Apólice PF / Adesão</div><div class="modal-subtitle">Implantação — Coletivo por Adesão</div></div>
+    </div>
+    <div id="form-imp-adesao-pf">
+      <div class="lgpd-banner lgpd-auto"></div>
+
+      <div class="form-group">
+        <label>Nome do Corretor <span class="required">*</span></label>
+        <input type="text" placeholder="Digite o nome do corretor" data-label="Corretor Responsável" required />
+      </div>
+      <div class="form-group">
+        <label>Operadora do plano <span class="required">*</span></label>
+        <select class="operadora-select" data-checklist-target="checklist-imp-adesao-pf"></select>
+      </div>
+
+      <!-- Checklist dinâmico por operadora -->
+      <div id="checklist-imp-adesao-pf"></div>
+
+      <div class="form-group">
+        <label>Entidade de classe / Associação <span class="required">*</span></label>
+        <input type="text" placeholder="Ex: OAB, CRM, Qualicorp, Aliança..." />
+      </div>
+      <div class="form-group">
+        <label>Nome completo do proponente <span class="required">*</span></label>
+        <input type="text" placeholder="Nome completo" />
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>CPF <span class="required">*</span></label><input type="text" placeholder="000.000.000-00" /></div>
+        <div class="form-group"><label>Data de nascimento <span class="required">*</span></label><input type="date" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefone <span class="required">*</span></label><input type="text" placeholder="(11) 90000-0000" /></div>
+        <div class="form-group"><label>E-mail <span class="required">*</span></label><input type="email" placeholder="seu@email.com" /></div>
+      </div>
+      <div class="form-group">
+        <label>Plano de interesse <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Adesão Individual</option>
+          <option>Adesão Familiar</option>
+          <option>Com coparticipação</option>
+          <option>Sem coparticipação</option>
+          <option>Com odontológico</option>
+          <option>Sem odontológico</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cobertura desejada <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Nacional</option>
+          <option>Estadual</option>
+          <option>Municipal</option>
+          <option>Grupo de municípios</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Acomodação <span class="required">*</span></label>
+        <select>
+          <option value="">Selecione</option>
+          <option>Apartamento</option>
+          <option>Enfermaria</option>
+          <option>Sem preferência</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Número de beneficiários (titular + dependentes) <span class="required">*</span></label>
+        <input type="text" placeholder="Ex: 3" />
+      </div>
+      <div class="form-group">
+        <label>Documentos do proponente e dependentes <span class="required">*</span></label>
+        <div class="file-upload-area">
+          <input type="file" id="file-doc-imp-adesao-pf" accept=".pdf,.jpg,.jpeg,.png" multiple onchange="handleFiles('doc-imp-adesao-pf')" />
+          <div class="file-upload-icon">📎</div>
+          <div class="file-upload-text">Clique ou arraste o arquivo aqui<br><strong>PDF, JPG ou PNG</strong> — máx. 10MB</div>
+        </div>
+        <div class="file-list" id="file-list-doc-imp-adesao-pf"></div>
+        <div class="wa-attach-warn" id="wa-warn-doc-imp-adesao-pf">
+          ⚠️ <strong>WhatsApp:</strong> Envie também os documentos diretamente na conversa do WhatsApp.
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea placeholder="Informações adicionais (opcional)"></textarea>
+      </div>
+      <div class="consent-block">
+        <input type="checkbox" id="consent-imp-adesao-pf" onchange="toggleConsent('imp-adesao-pf')">
+        <label for="consent-imp-adesao-pf">
+          Li e concordo com a <a href="#" onclick="document.getElementById('privacy-modal').classList.add('open');return false;">Política de Privacidade</a> da RSIM Consultoria e autorizo o uso dos meus dados pessoais conforme a <strong>LGPD (Lei nº 13.709/2018)</strong>.
+        </label>
+      </div>
+      <button class="btn-submit" onclick="submitForm('imp-adesao-pf')">✉️ Enviar Solicitação</button>
+    </div>
+    <div id="success-imp-adesao-pf" class="success-msg">
+      <div class="success-icon">✓</div>
+      <h3>Solicitação enviada! ✅</h3>
+      <p>Sua solicitação de <strong>Apólice PF / Adesão</strong> foi registrada. Guarde o protocolo abaixo.</p>
+      <div class="protocol"><span>Protocolo</span><strong id="prot-imp-adesao-pf"></strong></div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: imp-apolice-pj -->
 <div id="modal-imp-apolice-pj" class="modal-overlay">
   <div class="modal">
